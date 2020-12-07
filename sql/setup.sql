@@ -1,0 +1,7 @@
+CREATE TABLE dogs (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  name TEXT NOT NULL,
+  description TEXT,
+  breed TEXT NOT NULL
+);
+
