@@ -1,6 +1,9 @@
+require('dotenv').config();
 const express = require('express');
+// const { pipe } = require('superagent');
 const Dog = require('./models/dogs.js');
 const app = express();
+app.use(express.json());
 
 app.post('/dogs', async (req, res) => {
 
@@ -11,28 +14,32 @@ app.post('/dogs', async (req, res) => {
 
 app.get('/dogs', (req, res) => {
     Dog
-        .findById(req.body)
-        .then(dog => res.send(dog));
-});
-
-module.exports = app;
-app.get('/dogs', (req, res) => {
-    Dog
         .find()
         .then(dog => res.send(dog));
 });
 
-module.exports = app;
-app.delete('/dogs', (req, res) => {
+app.get('/dogs/:id', (req, res) => {
     Dog
-        .delete(req.body)
+        .findById(req.params.id)
         .then(dog => res.send(dog));
 });
-module.exports = app;
-app.put('/dogs', (req, res) => {
+
+
+
+app.delete('/dogs/:id', (req, res) => {
     Dog
-        .update(req.body)
+        .delete(req.params.id)
         .then(dog => res.send(dog));
 });
+app.put('/dogs/:id', (req, res) => {
+    Dog
+        .update(req.params.id, req.body)
+        .then(dog => res.send(dog));
+});
+
+app.listen(3000, () => {
+    console.log('app is listening at port 3000');
+});
+
 
 module.exports = app;
